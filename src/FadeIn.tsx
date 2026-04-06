@@ -8,7 +8,7 @@ export const FadeIn: React.FC<{title: string, frames: number}> = ({title, frames
     });
 
     Math.min(1, frame / frames);
-    return (    
+    return (
       <div style={{ opacity: opacity, textAlign: "center", fontSize: "2em" }}>
         {title}
       </div>

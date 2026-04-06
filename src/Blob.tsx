@@ -2,54 +2,55 @@ import { AbsoluteFill, Html5Audio, staticFile, useCurrentFrame, useVideoConfig }
 import { createSmoothSvgPath, useAudioData, visualizeAudio, visualizeAudioWaveform } from '@remotion/media-utils';
 
 
-export const Visualizer: React.FC<{ samples: number, src: string }> = ({ samples, src }) => {
-    const frame = useCurrentFrame();
-    const audioData = useAudioData(src);
-    const { width, fps } = useVideoConfig();
-
-    if (!audioData) return null;
-
-    const waveform = visualizeAudioWaveform({
-        fps,
-        frame,
-        audioData,
-        numberOfSamples: samples,
-        windowInSeconds: 1 / fps
-    });
-
-    const visu = visualizeAudio({
-        fps,
-        frame,
-        audioData,
-        numberOfSamples: samples
-    });
+export const Visualizer: React.FC<{ samples: number, src: number[] }> = ({ samples, src }) => {
+    const { width } = useVideoConfig();
+    //const frame = useCurrentFrame();
+    let audioData = src;
 
     //const v = getFreqDataLinearLog(visu, samples);
 
     const height = 300;
 
-    const p = createSmoothSvgPath({
-        points: waveform.map((x, i) => {
+    /*const p = createSmoothSvgPath({
+        points: audioData.map((x, i) => {
             return {
-                x: (i / (waveform.length - 1)) * width,
+                x: (i / (audioData.length - 1)) * width,
                 y: (x) * (height * 0.5) + (height / 2)
             }
         }),
-    });
+    });*/
+
+    //const barWidth = width / src.length;
 
     return (
-        <div>
-            <Html5Audio src={src} />
-            <div style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{
+            display: "flex",
+            flexDirection: "row",
+            height: "100%",
+            margin: "1em",
+            alignItems: "center"
+        }}>
+{/*             <div style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height}>
                     <path stroke="white" fill="white" strokeWidth={10} d={p as string} />
                 </svg>
             </div> 
-            {/*visu.map((v) => {
+ */}            {/*visu.map((v) => {
                 return (
                     <div style={{ width: 100 * v, height: 15, backgroundColor: "blue"}} />
                 )
             })*/}
+            {audioData.map((x, i) => {
+                return (
+                    <div key={i} style={{
+                        height: `${x * 250 * 15}%`,
+                        width: "100%",
+                        backgroundColor: "white"
+                    }}>
+                        
+                    </div>
+                )
+            })}
         </div>
     )
 }
@@ -107,7 +108,7 @@ function getFreqData(frequencyData: number[]): number[] {
         return scaled;
     });
 }
-function linearToLogBins(linearData: number[], minFreq = 20, maxFreq = 20000, outputBins = 128): number[] {
+function linearToLogBins(linearData: number[], outputBins = 128, minFreq = 20, maxFreq = 20000): number[] {
     const logData: number[] = [];
     const minLog = Math.log10(minFreq);
     const maxLog = Math.log10(maxFreq);
@@ -132,3 +133,4 @@ function getFreqDataLinearLog(frequencyData: number[], samples: number): number[
     // 3. optional sqrt scaling
     return logBins.map(v => Math.sqrt(v));
 }
+

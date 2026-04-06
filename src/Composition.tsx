@@ -1,25 +1,40 @@
-import { AbsoluteFill, getInputProps, Sequence, staticFile } from "remotion";
+import { AbsoluteFill, getInputProps, Html5Audio, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { FadeIn } from "./FadeIn";
 import { Visualizer } from "./Blob";
 import { Background } from "./Background";
 import { TitleArea } from "./TitleArea";
+import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 
 export const MyComposition = () => {
-  const { title, artist } = getInputProps();
-  const src = staticFile("track.mp3");
+  const { title, artist, file } = getInputProps();
+  const src = staticFile(String(file ?? "track.mp3"));
+  const frame = useCurrentFrame();
+
+  const d = useAudioData(src);
+  if (!d) return null;
+
+  const audioData = linearToLogBins(visualizeAudio({
+    audioData: d,
+    fps: 60,
+    frame,
+    numberOfSamples: 1024
+  }), 1024);
+
+  const amp = amplitudeToDb(audioData);
+
   // background
   // root
   // 
   return (
-
     <>
-      <Background url={"Untitled.png"} amp={0}></Background>
+      <Background url={"Untitled.png"} amp={amp * 0.4}></Background>
+      <Html5Audio src={src} />
       <AbsoluteFill style={{
         display: "flex",
         justifyContent: "center",
-        height: "100%"
+
       }}>
-        <Visualizer samples={256} src={src}></Visualizer>
+        <Visualizer samples={256} src={audioData}></Visualizer>
       </AbsoluteFill>
 
       <AbsoluteFill>
@@ -42,3 +57,35 @@ export const MyComposition = () => {
     </>
   );
 };
+
+function amplitudeToDb(data: number[]): number {
+  const minAmp = 1e-8; // verhindert -Infinity
+  const minDb = -80;
+  const maxDb = 0;
+
+  const d = data.map((amp) => {
+    const a = Math.max(amp, minAmp);
+    const db = 20 * Math.log10(a);
+
+    const normalized = (db - minDb) / (maxDb - minDb);
+    return Math.max(0, Math.min(1, normalized));
+  });
+
+  const sum = d.reduce((acc, v) => acc + v * v, 0);
+  return Math.sqrt(sum / d.length);
+}
+
+function linearToLogBins(linearData: number[], minFreq = 20, maxFreq = 20000, outputBins = 128): number[] {
+    const logData: number[] = [];
+    const minLog = Math.log10(minFreq);
+    const maxLog = Math.log10(maxFreq);
+
+    for (let i = 0; i < outputBins; i++) {
+        const logIndex = 10 ** (minLog + (i / outputBins) * (maxLog - minLog));
+        // map logIndex (Hz) auf linearData index
+        const linearIndex = Math.floor((logIndex / maxFreq) * linearData.length);
+        logData.push(linearData[linearIndex] ?? 0);
+    }
+
+    return logData;
+}
