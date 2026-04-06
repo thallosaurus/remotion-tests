@@ -2,8 +2,7 @@ import { AbsoluteFill, Html5Audio, staticFile, useCurrentFrame, useVideoConfig }
 import { createSmoothSvgPath, useAudioData, visualizeAudio, visualizeAudioWaveform } from '@remotion/media-utils';
 
 
-export const Visualizer: React.FC<{ samples: number }> = ({ samples }) => {
-    const src = staticFile("track.mp3");
+export const Visualizer: React.FC<{ samples: number, src: string }> = ({ samples, src }) => {
     const frame = useCurrentFrame();
     const audioData = useAudioData(src);
     const { width, fps } = useVideoConfig();
@@ -18,12 +17,12 @@ export const Visualizer: React.FC<{ samples: number }> = ({ samples }) => {
         windowInSeconds: 1 / fps
     });
 
-    /*const visu = visualizeAudio({
-        fps: 60,
+    const visu = visualizeAudio({
+        fps,
         frame,
         audioData,
         numberOfSamples: samples
-    });*/
+    });
 
     //const v = getFreqDataLinearLog(visu, samples);
 
@@ -35,20 +34,23 @@ export const Visualizer: React.FC<{ samples: number }> = ({ samples }) => {
                 x: (i / (waveform.length - 1)) * width,
                 y: (x) * (height * 0.5) + (height / 2)
             }
-        })
+        }),
     });
 
     return (
-
-            <div style={{ flex: 1 }}>
-                <Html5Audio src={src} />
-                <div style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height}>
-                        <path stroke="white" fill="white" strokeWidth={10} d={p as string} />
-                    </svg>
-                </div>
-            </div>
-
+        <div>
+            <Html5Audio src={src} />
+            <div style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height}>
+                    <path stroke="white" fill="white" strokeWidth={10} d={p as string} />
+                </svg>
+            </div> 
+            {/*visu.map((v) => {
+                return (
+                    <div style={{ width: 100 * v, height: 15, backgroundColor: "blue"}} />
+                )
+            })*/}
+        </div>
     )
 }
 /* 

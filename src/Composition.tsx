@@ -1,37 +1,43 @@
-import { AbsoluteFill, getInputProps, Sequence } from "remotion";
+import { AbsoluteFill, getInputProps, Sequence, staticFile } from "remotion";
 import { FadeIn } from "./FadeIn";
 import { Visualizer } from "./Blob";
 import { Background } from "./Background";
-
-export interface TrackMetadata {
-  artistName: string,
-  title: string
-}
-
+import { TitleArea } from "./TitleArea";
 
 export const MyComposition = () => {
-  const props = getInputProps();
-
+  const { title, artist } = getInputProps();
+  const src = staticFile("track.mp3");
+  // background
+  // root
+  // 
   return (
+
     <>
       <Background url={"Untitled.png"} amp={0}></Background>
       <AbsoluteFill style={{
         display: "flex",
-        flexDirection: "column",
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 20,
-        fontFamily: "Helvetica",
-        color: "white",
-        gap: "4em"
+        justifyContent: "center",
+        height: "100%"
       }}>
-        <FadeIn title={props["title"] ?? "no title"} frames={30} />
+        <Visualizer samples={256} src={src}></Visualizer>
+      </AbsoluteFill>
+
+      <AbsoluteFill>
         <div style={{
-          verticalAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          height: "100%",
+          margin: "2em"
         }}>
-          <Visualizer samples={256}></Visualizer>
+          <div style={{
+            fontSize: 20,
+            color: "white",
+            fontFamily: "Helvetica",
+          }}>
+            <TitleArea artist={String(artist ?? "no artist defined")} title={String(title ?? "no title defined")} cover="default_cover.png"></TitleArea>
+          </div>
         </div>
-        <FadeIn title={props["artist"] ?? "no artist"} frames={30} />
       </AbsoluteFill>
     </>
   );
