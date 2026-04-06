@@ -9,29 +9,31 @@ export const TitleArea: React.FC<{
 
     return (
         <div style={{
-            display: "grid",
-            gridTemplateColumns: "4em 1fr",
-            gridTemplateRows: "1fr",
+            display: "flex",
             gap: "1em"
         }}>
-            <div>
-                <div>
-                { title }
-                </div>
-
-                <div>
-                { artist }
-                </div>
-            </div>
             <div style={{
-                gridArea: "1 / 1 / 4 / 2"
+                
             }}>
                 <Img src={coverPicture} style={{
                     width: "4em",
                     height: "4em",
-                    border: ".3em solid white"
+                    border: ".3em solid white",
                 }}></Img>
             </div>
+                    <div>
+                        <div style={{
+                            fontSize: "1em",
+                        }}>
+                        { title }
+                        </div>
+        
+                        <div style={{
+                            fontSize: ".5em"
+                        }}>
+                        { artist }
+                        </div>
+                    </div>
         </div>
     )
 }

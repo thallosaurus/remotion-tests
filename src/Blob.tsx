@@ -7,20 +7,7 @@ export const Visualizer: React.FC<{ samples: number, src: number[] }> = ({ sampl
     //const frame = useCurrentFrame();
     let audioData = src;
 
-    //const v = getFreqDataLinearLog(visu, samples);
-
     const height = 300;
-
-    /*const p = createSmoothSvgPath({
-        points: audioData.map((x, i) => {
-            return {
-                x: (i / (audioData.length - 1)) * width,
-                y: (x) * (height * 0.5) + (height / 2)
-            }
-        }),
-    });*/
-
-    //const barWidth = width / src.length;
 
     return (
         <div style={{
@@ -30,67 +17,19 @@ export const Visualizer: React.FC<{ samples: number, src: number[] }> = ({ sampl
             margin: "1em",
             alignItems: "center"
         }}>
-{/*             <div style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height}>
-                    <path stroke="white" fill="white" strokeWidth={10} d={p as string} />
-                </svg>
-            </div> 
- */}            {/*visu.map((v) => {
-                return (
-                    <div style={{ width: 100 * v, height: 15, backgroundColor: "blue"}} />
-                )
-            })*/}
             {audioData.map((x, i) => {
                 return (
                     <div key={i} style={{
-                        height: `${x * 250 * 15}%`,
+                        height: `${x * 250 * 10}%`,
                         width: "100%",
                         backgroundColor: "white"
                     }}>
-                        
                     </div>
                 )
             })}
         </div>
     )
 }
-/* 
-export const Blob = ({src}) => {
-
-  if (!audioData) return null;
-
-  const visualization = visualizeAudio({
-    fps: 60,
-    frame,
-    audioData,
-    numberOfSamples: 128,
-  });
-
-  return (
-    <svg width="500" height="500">
-      {visualization.map((v, i) => {
-        const angle = (i / visualization.length) * Math.PI * 2;
-
-        const r = 150 + v * 200;
-
-        const x = 250 + Math.cos(angle) * r;
-        const y = 250 + Math.sin(angle) * r;
-
-        return (
-          <line
-            key={i}
-            x1={250}
-            y1={250}
-            x2={x}
-            y2={y}
-            stroke="white"
-            strokeWidth={2}
-          />
-        );
-      })}
-    </svg>
-  );
-}; */
 
 function getFreqData(frequencyData: number[]): number[] {
 

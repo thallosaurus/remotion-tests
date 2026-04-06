@@ -6,7 +6,7 @@ import { TitleArea } from "./TitleArea";
 import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 
 export const MyComposition = () => {
-  const { title, artist, file } = getInputProps();
+  const { title, artist, file, cover } = getInputProps();
   const src = staticFile(String(file ?? "track.mp3"));
   const frame = useCurrentFrame();
 
@@ -16,8 +16,8 @@ export const MyComposition = () => {
   const audioData = linearToLogBins(visualizeAudio({
     audioData: d,
     fps: 60,
+    numberOfSamples: 1024,
     frame,
-    numberOfSamples: 1024
   }), 1024);
 
   const amp = amplitudeToDb(audioData);
@@ -25,14 +25,14 @@ export const MyComposition = () => {
   // background
   // root
   // 
+  //const blur = Math.min(0, -2 + (amp * 3))
   return (
     <>
-      <Background url={"Untitled.png"} amp={amp * 0.4}></Background>
+      <Background url={"Untitled.png"} amp={amp}></Background>
       <Html5Audio src={src} />
       <AbsoluteFill style={{
         display: "flex",
         justifyContent: "center",
-
       }}>
         <Visualizer samples={256} src={audioData}></Visualizer>
       </AbsoluteFill>
@@ -50,7 +50,7 @@ export const MyComposition = () => {
             color: "white",
             fontFamily: "Helvetica",
           }}>
-            <TitleArea artist={String(artist ?? "no artist defined")} title={String(title ?? "no title defined")} cover="default_cover.png"></TitleArea>
+            <TitleArea artist={String(artist ?? "no artist defined")} title={String(title ?? "no title defined")} cover={String(cover ?? "default_cover.png")}></TitleArea>
           </div>
         </div>
       </AbsoluteFill>
