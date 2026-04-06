@@ -1,4 +1,4 @@
-import { AbsoluteFill, Sequence } from "remotion";
+import { AbsoluteFill, getInputProps, Sequence } from "remotion";
 import { FadeIn } from "./FadeIn";
 import { Visualizer } from "./Blob";
 import { Background } from "./Background";
@@ -10,6 +10,8 @@ export interface TrackMetadata {
 
 
 export const MyComposition = () => {
+  const props = getInputProps();
+
   return (
     <>
       <Background url={"Untitled.png"} amp={0}></Background>
@@ -23,13 +25,13 @@ export const MyComposition = () => {
         color: "white",
         gap: "4em"
       }}>
-        <FadeIn title={"Lenna on Acid"} frames={30} />
+        <FadeIn title={props["title"] ?? "no title"} frames={30} />
         <div style={{
           verticalAlign: "center",
         }}>
           <Visualizer samples={256}></Visualizer>
         </div>
-          <FadeIn title={"PRiNCESS_M0THBURN"} frames={30}/>
+        <FadeIn title={props["artist"] ?? "no artist"} frames={30} />
       </AbsoluteFill>
     </>
   );
