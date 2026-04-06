@@ -1,13 +1,10 @@
 import { AbsoluteFill, Html5Audio, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 import { createSmoothSvgPath, useAudioData, visualizeAudio, visualizeAudioWaveform } from '@remotion/media-utils';
-
+import { Trail } from "@remotion/motion-blur";
 
 export const Visualizer: React.FC<{ samples: number, src: number[] }> = ({ samples, src }) => {
-    const { width } = useVideoConfig();
     //const frame = useCurrentFrame();
     let audioData = src;
-
-    const height = 300;
 
     return (
         <div style={{
@@ -15,7 +12,8 @@ export const Visualizer: React.FC<{ samples: number, src: number[] }> = ({ sampl
             flexDirection: "row",
             height: "100%",
             margin: "1em",
-            alignItems: "center"
+            alignItems: "center",
+            gap: "3px"
         }}>
             {audioData.map((x, i) => {
                 return (

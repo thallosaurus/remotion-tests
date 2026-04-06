@@ -464,6 +464,13 @@
     mediabunny "1.39.2"
     remotion "4.0.444"
 
+"@remotion/motion-blur@^4.0.446":
+  version "4.0.446"
+  resolved "https://registry.yarnpkg.com/@remotion/motion-blur/-/motion-blur-4.0.446.tgz#0dd9dc2657d972f1ab1c78a191279472d4b40628"
+  integrity sha512-H8EnEXwuZ9SFh1EM157PqIvRAaFozbfK+qA0KQHYJP+2u6NQJaQmnx8+Tc5AtqUZgUX5+fQ7y2tnec1+lngonw==
+  dependencies:
+    remotion "4.0.446"
+
 "@remotion/player@4.0.444":
   version "4.0.444"
   resolved "https://registry.yarnpkg.com/@remotion/player/-/player-4.0.444.tgz#f5e6188060a4c9875594340be64a4a39462d127f"
@@ -1933,6 +1940,11 @@ remotion@4.0.444:
   version "4.0.444"
   resolved "https://registry.yarnpkg.com/remotion/-/remotion-4.0.444.tgz#835698b898a01d4205f4940702158abaff5576ff"
   integrity sha512-vG0HwwKOFCZE+QHi8b5OCxy9nTHzsGMcPVtIwe9ZY3VqU5lfjFjM3Bd1C0FvUO1mIqpDoirfWsJi2vCo6v2i0g==
+
+remotion@4.0.446:
+  version "4.0.446"
+  resolved "https://registry.yarnpkg.com/remotion/-/remotion-4.0.446.tgz#a920a5c7fd0dd8366413ad512fc45f89b2f3fe24"
+  integrity sha512-NkE0d1APetJywF6MJJXE1dlMDXKhQWtlJV3HUfVBd7QUKPmoA3nhFBJaIsCyl/Rve2bmnq8h+yBjAU/skXezcA==
 
 require-from-string@^2.0.2:
   version "2.0.2"
