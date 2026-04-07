@@ -6,7 +6,7 @@ import { TitleArea } from "./TitleArea";
 import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import { CompositionProps } from "./Root";
 
-export const MyComposition: React.FC<CompositionProps> = ({ title, artist, file, cover, artistLogo, background, barColor }) => {
+export const MyComposition: React.FC<CompositionProps> = ({ title, artist, file, cover, artistLogo, background, barColor, fps }) => {
   const src = staticFile(file);
   const frame = useCurrentFrame();
 
@@ -19,7 +19,7 @@ export const MyComposition: React.FC<CompositionProps> = ({ title, artist, file,
 
   const audioData = linearToLogBins(visualizeAudio({
     audioData: d,
-    fps: 60,
+    fps,
     numberOfSamples: 1024,
     frame,
   }), 1024);
