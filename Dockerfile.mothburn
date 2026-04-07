@@ -32,5 +32,5 @@ RUN npm i
 RUN npx remotion browser ensure
 
 # Run your application
-COPY render.mjs render.mjs
+COPY render_princess_mothburn.mjs render.mjs
 CMD ["node", "render.mjs"]

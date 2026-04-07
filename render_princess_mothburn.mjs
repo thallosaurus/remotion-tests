@@ -1,6 +1,23 @@
 import {bundle} from '@remotion/bundler';
 import {renderMedia, selectComposition} from '@remotion/renderer';
 import {createRequire} from 'node:module';
+import { exit } from 'node:process';
+import { parseArgs } from 'node:util';
+
+const {
+  values: { title }
+} = parseArgs({
+  options: {
+    title: {
+      type: "string"
+    }
+  }
+})
+
+if (!title) {
+  console.error("track title was not set")
+  exit();
+}
 
 const require = createRequire(import.meta.url);
 
@@ -11,6 +28,7 @@ const bundled = await bundle({
 });
 
 const inputProps = {
+  title,
   //"title": "Lenna On Acid [Buddha On Acid Kick-Edit]",
   artist: "PRiNCESS_M0THBURN",
   file: "track.mp3",
