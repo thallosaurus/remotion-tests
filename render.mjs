@@ -10,8 +10,6 @@ const bundled = await bundle({
   webpackOverride: (config) => config,
 });
 
-let id = crypto.randomUUID();
-
 const inputProps = {
   //"title": "Lenna On Acid [Buddha On Acid Kick-Edit]",
   artist: "PRiNCESS_M0THBURN",
@@ -29,15 +27,14 @@ const composition = await selectComposition({
   inputProps,
 });
 
-console.log(`Starting to render composition with id ${id}`);
+console.log('Starting to render composition');
 
 await renderMedia({
   codec: 'h264',
+  logLevel: "verbose",
   composition,
   serveUrl: bundled,
-  logLevel: "verbose",
-  //outputLocation: `out/${composition.id}.mp4`,
-  outputLocation: `out/${id}.mp4`,
+  outputLocation: `out/${composition.id}.mp4`,
   chromiumOptions: {
     enableMultiProcessOnLinux: true,
   },
