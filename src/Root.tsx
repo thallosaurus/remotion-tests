@@ -1,8 +1,9 @@
 import { Composition, getInputProps, staticFile } from "remotion";
-import { MyComposition } from "./Composition";
+import { Visualizer1 } from "./Visualizer1/Composition";
 import { getAudioDurationInSeconds } from '@remotion/media-utils';
+import { CoverOnly } from "./CoverOnly/Composition";
 
-export type CompositionProps = {
+export type Visualizer1Props = {
   title: string,
   artist: string,
   file: string,
@@ -13,12 +14,12 @@ export type CompositionProps = {
   barColor: string
 }
 
-export const RemotionRoot: React.FC<CompositionProps> = () => {
+export const RemotionRoot: React.FC<Visualizer1Props> = () => {
   return (
     <>
       <Composition
         id="Visualizer1"
-        component={MyComposition}
+        component={Visualizer1}
         width={1280}
         height={720}
         defaultProps={{
@@ -43,6 +44,28 @@ export const RemotionRoot: React.FC<CompositionProps> = () => {
           }
         }}
       />
+      {/*<Composition
+        id="CoverOnly"
+        component={CoverOnly}
+        width={1280}
+        height={720}
+        fps={60}
+        calculateMetadata={async ({ defaultProps, props }) => {
+          const data = staticFile(props.file ?? defaultProps.file);
+          const seconds = await getAudioDurationInSeconds(data);
+          return {
+            props: {
+              ...props
+            },
+            durationInFrames: Math.floor(seconds) * 60,
+            fps: props.fps
+          }
+        }}
+      /> */}
     </>
   );
 };
+
+/*async function calculateMetadata({ defaultProps, props }) {
+  
+}*/

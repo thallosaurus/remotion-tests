@@ -3,7 +3,7 @@ import { Img, staticFile } from "remotion"
 export const TitleArea: React.FC<{
     title: string,
     artist: string,
-    cover: string
+    cover: string | null
 }> = ({ title, artist, cover }) => {
     
     let coverElem = null;

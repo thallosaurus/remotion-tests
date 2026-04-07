@@ -1,12 +1,11 @@
-import { AbsoluteFill, getInputProps, Html5Audio, Img, interpolate, Sequence, staticFile, useCurrentFrame } from "remotion";
-import { FadeIn } from "./FadeIn";
+import { AbsoluteFill, Html5Audio, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { Visualizer } from "./Blob";
 import { Background } from "./Background";
 import { TitleArea } from "./TitleArea";
 import { useAudioData, visualizeAudio } from "@remotion/media-utils";
-import { CompositionProps } from "./Root";
+import { Visualizer1Props } from "../Root";
 
-export const MyComposition: React.FC<CompositionProps> = ({ title, artist, file, cover, artistLogo, background, barColor, fps }) => {
+export const Visualizer1: React.FC<Visualizer1Props> = ({ title, artist, file, cover, artistLogo, background, barColor, fps }) => {
   const src = staticFile(file);
   const frame = useCurrentFrame();
 
@@ -68,7 +67,7 @@ export const MyComposition: React.FC<CompositionProps> = ({ title, artist, file,
               color: "white",
               fontFamily: "Arial",
             }}>
-              <TitleArea artist={String(artist ?? "no artist defined")} title={String(title ?? "no title defined")} cover={cover}></TitleArea>
+              <TitleArea artist={artist} title={title} cover={cover}></TitleArea>
             </div>
           </div>
         </AbsoluteFill>

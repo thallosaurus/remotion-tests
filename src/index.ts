@@ -1,4 +1,4 @@
 import { registerRoot } from "remotion";
-import { RemotionRoot } from "./Root";
+import { RemotionRoot, Visualizer1Props } from "./Root";
 
 registerRoot(RemotionRoot);
