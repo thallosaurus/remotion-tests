@@ -1,8 +1,4 @@
-import { AbsoluteFill, Html5Audio, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
-import { createSmoothSvgPath, useAudioData, visualizeAudio, visualizeAudioWaveform } from '@remotion/media-utils';
-import { Trail } from "@remotion/motion-blur";
-
-export const Visualizer: React.FC<{ samples: number, src: number[] }> = ({ samples, src }) => {
+export const Visualizer: React.FC<{ src: number[], barColor: string }> = ({ src, barColor }) => {
     //const frame = useCurrentFrame();
     let audioData = src;
 
@@ -20,7 +16,7 @@ export const Visualizer: React.FC<{ samples: number, src: number[] }> = ({ sampl
                     <div key={i} style={{
                         height: `${x * 250 * 10}%`,
                         width: "100%",
-                        backgroundColor: "white"
+                        backgroundColor: barColor
                     }}>
                     </div>
                 )

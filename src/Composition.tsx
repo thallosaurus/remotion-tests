@@ -6,15 +6,11 @@ import { TitleArea } from "./TitleArea";
 import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import { CompositionProps } from "./Root";
 
-export const MyComposition = () => {
-  const { title, artist, file, cover, artistLogo } = getInputProps<CompositionProps>();
-  const p = getInputProps<CompositionProps>();
-
-  const src = staticFile(p.file);
+export const MyComposition: React.FC<CompositionProps> = ({ title, artist, file, cover, artistLogo, background, barColor }) => {
+  const src = staticFile(file);
   const frame = useCurrentFrame();
 
-  //const d = useAudioData(src);
-  const d = null;
+  const d = useAudioData(src);
   if (!d) return null;
 
   const opacity = interpolate(frame, [0, 120], [0, 1], {
@@ -30,6 +26,13 @@ export const MyComposition = () => {
 
   const amp = amplitudeToDb(audioData);
 
+  let bgElem = null;
+  if (background) {
+    bgElem = <Background url={background} amp={amp} />
+  } else {
+    bgElem = <AbsoluteFill style={{ backgroundColor: "black"}} /> 
+  }
+
   // background
   // root
   // 
@@ -37,14 +40,13 @@ export const MyComposition = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
       <div style={{ opacity }}>
-
-        <Background url={"voronoi hills.jpeg"} amp={amp}></Background>
+        {bgElem} 
         <Html5Audio src={src} />
         <AbsoluteFill style={{
           display: "flex",
           justifyContent: "center",
         }}>
-          <Visualizer samples={256} src={audioData}></Visualizer>
+          <Visualizer src={audioData} barColor={barColor}></Visualizer>
         </AbsoluteFill>
 
         <AbsoluteFill>
@@ -66,7 +68,7 @@ export const MyComposition = () => {
               color: "white",
               fontFamily: "Arial",
             }}>
-              <TitleArea artist={String(artist ?? "no artist defined")} title={String(title ?? "no title defined")} cover={String(cover ?? "default_cover.png")}></TitleArea>
+              <TitleArea artist={String(artist ?? "no artist defined")} title={String(title ?? "no title defined")} cover={cover}></TitleArea>
             </div>
           </div>
         </AbsoluteFill>

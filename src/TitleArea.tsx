@@ -5,8 +5,16 @@ export const TitleArea: React.FC<{
     artist: string,
     cover: string
 }> = ({ title, artist, cover }) => {
-    const coverPicture = staticFile(cover ?? "default_cover.png")
-
+    
+    let coverElem = null;
+    if (cover) {
+        const coverPicture = staticFile(cover);
+        coverElem = <Img src={coverPicture} style={{
+            width: "4em",
+            height: "4em",
+            border: ".3em solid white",
+        }}></Img>
+    }
     return (
         <div style={{
             display: "flex",
@@ -15,11 +23,7 @@ export const TitleArea: React.FC<{
             <div style={{
                 
             }}>
-                <Img src={coverPicture} style={{
-                    width: "4em",
-                    height: "4em",
-                    border: ".3em solid white",
-                }}></Img>
+                {coverElem}
             </div>
                     <div>
                         <div style={{

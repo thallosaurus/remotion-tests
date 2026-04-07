@@ -6,36 +6,38 @@ export type CompositionProps = {
   title: string,
   artist: string,
   file: string,
-  cover: string,
+  cover: string | null,
   artistLogo: string | null
-  fps: number
+  background: string | null,
+  fps: number,
+  barColor: string
 }
 
 export const RemotionRoot: React.FC<CompositionProps> = () => {
-
-/*   const length = await getAudioDurationInSeconds(file);
-  console.log(Math.floor(length * 60));
- */
   return (
     <>
       <Composition
-        id="MyComp"
+        id="Visualizer1"
         component={MyComposition}
         width={1280}
         height={720}
         defaultProps={{
           title: "no title set",
           artist: "no artist set",
-          file: "default.mp3",
-          cover: "cover.png",
+          file: "track.mp3",
+          cover: null,
           fps: 60,
-          artistLogo: null
+          artistLogo: null,
+          barColor: "blue",
+          background: null
         }}
         calculateMetadata={async ({ defaultProps, props }) => {
-          console.log(props.file ?? defaultProps.file);
           const data = staticFile(props.file ?? defaultProps.file);
           const seconds = await getAudioDurationInSeconds(data);
           return {
+            props: {
+              ...props
+            },
             durationInFrames: Math.floor(seconds) * 60,
             fps: props.fps
           }
