@@ -4,13 +4,17 @@ import { Visualizer } from "./Blob";
 import { Background } from "./Background";
 import { TitleArea } from "./TitleArea";
 import { useAudioData, visualizeAudio } from "@remotion/media-utils";
+import { CompositionProps } from "./Root";
 
 export const MyComposition = () => {
-  const { title, artist, file, cover, artistLogo } = getInputProps();
-  const src = staticFile(String(file ?? "track.mp3"));
+  const { title, artist, file, cover, artistLogo } = getInputProps<CompositionProps>();
+  const p = getInputProps<CompositionProps>();
+
+  const src = staticFile(p.file);
   const frame = useCurrentFrame();
 
-  const d = useAudioData(src);
+  //const d = useAudioData(src);
+  const d = null;
   if (!d) return null;
 
   const opacity = interpolate(frame, [0, 120], [0, 1], {
