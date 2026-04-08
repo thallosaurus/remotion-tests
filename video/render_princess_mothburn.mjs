@@ -5,17 +5,28 @@ import { exit } from 'node:process';
 import { parseArgs } from 'node:util';
 
 const {
-  values: { title }
+  values: { title, file }
 } = parseArgs({
   options: {
     title: {
       type: "string"
-    }
+    },
+    file: {
+      type: "string"
+    },
+    /*cover: {
+      type: "string"
+    }*/
   }
 })
 
 if (!title) {
   console.error("track title was not set")
+  exit();
+}
+
+if (!file) {
+  console.error("file was not set")
   exit();
 }
 
@@ -31,8 +42,8 @@ const inputProps = {
   title,
   //"title": "Lenna On Acid [Buddha On Acid Kick-Edit]",
   artist: "PRiNCESS_M0THBURN",
-  file: "track.mp3",
-  cover: "cover.png",
+  file,
+  cover: null,
   fps: 60,
   artistLogo: null,
   barColor: "#42e6f5",
